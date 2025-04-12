@@ -11,7 +11,8 @@ const Header: React.FC = () => {
       <div className="container mx-auto flex items-center justify-between px-4">
         <Link to="/" className="flex items-center gap-2 text-primary">
           <Plane size={28} />
-          <span className="text-xl font-bold">Airline Insight Hub</span>
+          <span className="ml-2 font-bold text-lg">Airline Forecast Portal</span>
+
         </Link>
         
         <NavigationMenu>

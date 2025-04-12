@@ -1,5 +1,7 @@
 
 import type { Config } from "tailwindcss";
+//import '@fontsource/inter'; // or static .css if not using variable fonts
+
 
 export default {
 	darkMode: ["class"],
@@ -105,7 +107,10 @@ export default {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'float': 'float 3s ease-in-out infinite'
-			}
+			},
+			fontFamily: {
+				sans: ['Inter', 'sans-serif'], // 👈 This sets Inter as your default sans
+			  },
 		}
 	},
 	plugins: [require("tailwindcss-animate")],

@@ -2,23 +2,23 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import Header from '@/components/Header';
+//import Header from '@/components/Header';
 import ChartSelector from '@/components/ChartSelector';
 import StockChart from '@/components/StockChart';
 import StockMetrics from '@/components/StockMetrics';
 import { Button } from '@/components/ui/button';
 
+
 const airlineNames: Record<string, string> = {
-  'AA': 'American Airlines',
-  'AS': 'Alaska Airlines',
-  'B6': 'JetBlue Airways',
-  'DL': 'Delta Air Lines',
-  'F9': 'Frontier Airlines',
-  'G4': 'Allegiant Air',
-  'HA': 'Hawaiian Airlines',
-  'NK': 'Spirit Airlines',
-  'UA': 'United Airlines',
-  'WN': 'Southwest Airlines',
+  'AAL': 'American Airlines',
+  'ALK': 'Alaska Airlines',
+  'JBLU': 'JetBlue Airways',
+  'DAL': 'Delta Air Lines',
+  'ULCC': 'Frontier Airlines',
+  'ALGT': 'Allegiant Air',
+  'SAVEQ': 'Spirit Airlines',
+  'UAL': 'United Airlines',
+  'LUV': 'Southwest Airlines',
 };
 
 const AirlineDetail: React.FC = () => {
@@ -37,7 +37,7 @@ const AirlineDetail: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+    
       <main className="container mx-auto py-8 px-4">
         <div className="mb-6">
           <Link to="/">

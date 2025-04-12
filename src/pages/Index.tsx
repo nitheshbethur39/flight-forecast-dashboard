@@ -1,34 +1,33 @@
 
 import React from 'react';
-import Header from '@/components/Header';
+//import Header from '@/components/Header';
 import AirlineCard from '@/components/AirlineCard';
 import { Button } from '@/components/ui/button';
 import { ArrowDown } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
 const airlines = [
-  { code: 'AA', name: 'American Airlines', color: 'red' },
-  { code: 'AS', name: 'Alaska Airlines', color: 'navy' },
-  { code: 'B6', name: 'JetBlue Airways', color: 'lightblue' },
-  { code: 'DL', name: 'Delta Air Lines', color: 'blue' },
-  { code: 'F9', name: 'Frontier Airlines', color: 'green' },
-  { code: 'G4', name: 'Allegiant Air', color: 'yellow' },
-  { code: 'HA', name: 'Hawaiian Airlines', color: 'purple' },
-  { code: 'NK', name: 'Spirit Airlines', color: 'yellow' },
-  { code: 'UA', name: 'United Airlines', color: 'blue' },
-  { code: 'WN', name: 'Southwest Airlines', color: 'orange' },
+  { code: 'AAL', name: 'American Airlines', color: 'red' , logo: '/logos/AAL.png' },
+  { code: 'ALK', name: 'Alaska Airlines', color: 'navy'  , logo: '/logos/ALK.png'},
+  { code: 'JBLU', name: 'JetBlue Airways', color: 'lightblue', logo: '/logos/JBLU.png' },
+  { code: 'DAL', name: 'Delta Air Lines', color: 'blue', logo: '/logos/DAL.png' },
+  { code: 'ULCC', name: 'Frontier Airlines', color: 'green', logo: '/logos/ULCC.png' },
+  { code: 'ALGT', name: 'Allegiant Air', color: 'yellow', logo: '/logos/ALGT.png' },
+  { code: 'SAVEQ', name: 'Spirit Airlines', color: 'yellow' , logo: '/logos/SAVEQ.png'},
+  { code: 'UAL', name: 'United Airlines', color: 'blue', logo: '/logos/UAL.png' },
+  { code: 'LUV', name: 'Southwest Airlines', color: 'orange', logo: '/logos/LUV.png' },
 ];
 
 const Index: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+   
       
       {/* Hero Section */}
       <section className="relative h-[500px] overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1576234699886-272c69fe3686?q=80&w=2000&auto=format&fit=crop"
+            src="/images/flight.jpg"
             alt="Airplane in flight"
             className="w-full h-full object-cover"
           />
@@ -58,28 +57,30 @@ const Index: React.FC = () => {
         </div>
         
         <div className="absolute bottom-2 left-4 text-white/70 text-xs">
-          Photo by Ashim D'Silva on Unsplash
+          Photo by Artturi Jalli on Unsplash
         </div>
       </section>
       
       {/* Airline Selection Section */}
-      <section id="airline-section" className="container mx-auto py-16 px-4">
+      <section id="airline-section" className="container mx-auto py-6 px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-2">Explore by Airline</h2>
           <p className="text-gray-600">Click a logo to view prediction insights.</p>
-          <Separator className="mt-6 mx-auto w-24" />
+          <Separator className="mt-6 mx-auto w-30" />
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+        <div className="flex flex-wrap justify-center gap-2">
           {airlines.map((airline) => (
             <AirlineCard 
-              key={airline.code} 
-              code={airline.code} 
-              name={airline.name} 
+              key={airline.code}
+              code={airline.code}
+              name={airline.name}
               color={airline.color}
+              logo={airline.logo}
             />
           ))}
         </div>
+
       </section>
       
       {/* Features Section */}
