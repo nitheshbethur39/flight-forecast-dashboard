@@ -1,73 +1,67 @@
-# Welcome to your Lovable project
+✈️ Flight Forecast Dashboard
+A data-driven web app for forecasting airline stock prices using machine learning predictions and visualizing them in an interactive dashboard.
 
-## Project info
+🌐 Live Demo
+URL: https://flight-forecast-dashboard.vercel.app
 
-**URL**: https://lovable.dev/projects/a1f92811-6888-4d3b-b59d-74af0af63183
+🧰 Tech Stack
+Frontend: React + TypeScript
 
-## How can I edit this code?
+Styling: Tailwind CSS + shadcn/ui
 
-There are several ways of editing your application.
+Build Tool: Vite
 
-**Use Lovable**
+Charts: Recharts
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/a1f92811-6888-4d3b-b59d-74af0af63183) and start prompting.
+Hosting: Vercel
 
-Changes made via Lovable will be committed automatically to this repo.
+📦 Project Setup
+Make sure you have Node.js + npm installed (recommended via nvm).
 
-**Use your preferred IDE**
+bash
+Copy
+Edit
+# 1. Clone the repository
+git clone https://github.com/nitheshbethur39/flight-forecast-dashboard.git
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+# 2. Navigate into the project
+cd flight-forecast-dashboard
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+# 3. Install dependencies
+npm install
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 4. Run the app locally
 npm run dev
-```
+✍️ How to Contribute or Edit
+✅ Option 1: Edit Locally
+Make code changes using any editor (VS Code recommended), then commit and push:
 
-**Edit a file directly in GitHub**
+bash
+Copy
+Edit
+git add .
+git commit -m "Your change message"
+git push origin main
+✅ Option 2: Use GitHub Web UI
+Navigate to any file
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Click the ✏️ (Edit) icon
 
-**Use GitHub Codespaces**
+Make your changes and Commit directly to main
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+✅ Option 3: GitHub Codespaces
+Go to your repo → Code → Codespaces
 
-## What technologies are used for this project?
+Launch a new codespace to edit, test, and push changes in-browser.
 
-This project is built with:
+🚀 Deployment via Vercel
+This app is auto-deployed with every push to the main branch using Vercel.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+To trigger a deployment:
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/a1f92811-6888-4d3b-b59d-74af0af63183) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes it is!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+bash
+Copy
+Edit
+git add .
+git commit -m "Your deployment-ready changes"
+git push origin main
