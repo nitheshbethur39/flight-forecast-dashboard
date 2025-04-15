@@ -1,35 +1,43 @@
 import { useEffect, useState } from 'react';
 import Papa from 'papaparse';
 
-interface ChartRow {
+export interface AirlineDataPoint {
   Date: string;
-  Historical?: number;
-  Test_Actual?: number;
-  Test_Predicted?: number;
-  Forecasted?: number;
+  Historical: number | null;
+  Test_Actual: number | null;
+  Test_Predicted: number | null;
+  Forecasted: number | null;
 }
 
-const useChartData = (airlineCode: string) => {
-  const [data, setData] = useState<ChartRow[]>([]);
+const useAirlineChartData = (airlineCode: string): AirlineDataPoint[] => {
+  const [data, setData] = useState<AirlineDataPoint[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`/data/${airlineCode}_model_plot_data.csv`);
-      const text = await response.text();
-      
-      Papa.parse(text, {
-        header: true,
-        dynamicTyping: true,
-        complete: (result) => {
-          setData(result.data as ChartRow[]);
-        },
-      });
-    };
+    fetch(`/data/${airlineCode}_model_plot_data.csv`)
+      .then(response => response.text())
+      .then(csvText => {
+        Papa.parse(csvText, {
+          header: true,
+          skipEmptyLines: true,
+          complete: (results: any) => {
+            const parseValue = (val: string) =>
+              val === '' || val === 'null' ? null : parseFloat(val);
 
-    fetchData();
+            const parsed = results.data.map((row: any) => ({
+              Date: row.Date,
+              Historical: parseValue(row.Historical),
+              Test_Actual: parseValue(row.Test_Actual),
+              Test_Predicted: parseValue(row.Test_Predicted),
+              Forecasted: parseValue(row.Forecasted),
+            }));
+
+            setData(parsed);
+          },
+        });
+      });
   }, [airlineCode]);
 
   return data;
 };
 
-export default useChartData;
+export default useAirlineChartData;

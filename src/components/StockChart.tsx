@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
-import useChartData from '@/hooks/useChartData';
+import useChartData from '@/hooks/useAirlineChartData';
 
 
 interface StockChartProps {
