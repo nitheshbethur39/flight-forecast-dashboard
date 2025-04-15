@@ -18,9 +18,7 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  build: {
-    rollupOptions: {
-      external: ['axios'], // ✅ Fix for Vercel build error
-    },
+  optimizeDeps: {
+    include: ['axios'], // ✅ explicitly include axios to avoid Rollup error
   },
 }));
