@@ -1,68 +1,79 @@
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowUpRight, ArrowDownRight, Minus } from 'lucide-react';
+import { getStockPrice } from '@/api/getStockPrice';
 
 interface StockMetricsProps {
   airlineCode: string;
 }
 
-// Mock data generator
-const generateMetrics = (airlineCode: string) => {
-  // Generate mock data based on airline code for consistency
-  const seed = airlineCode.charCodeAt(0) + airlineCode.charCodeAt(1);
-  
-  const currentPrice = Math.floor(seed % 50) + 20 + (Math.random() * 10);
-  const changePercent = (Math.random() * 6) - 3;
-  const prediction = currentPrice * (1 + (Math.random() * 0.2));
-  const confidence = Math.floor(Math.random() * 30) + 70;
-  
-  return {
-    currentPrice: currentPrice.toFixed(2),
-    changePercent: changePercent.toFixed(2),
-    prediction: prediction.toFixed(2),
-    confidence: `${confidence}%`,
-    trend: changePercent > 0 ? 'up' : changePercent < 0 ? 'down' : 'neutral'
-  };
+const tickerMap: Record<string, string> = {
+  AAL: 'AAL',
+  ALK: 'ALK',
+  JBLU: 'JBLU',
+  DAL: 'DAL',
+  ULCC: 'ULCC',
+  ALGT: 'ALGT',
+  SAVEQ: 'SAVE',
+  UAL: 'UAL',
+  LUV: 'LUV',
 };
 
 const StockMetrics: React.FC<StockMetricsProps> = ({ airlineCode }) => {
-  const metrics = generateMetrics(airlineCode);
+  const [price, setPrice] = useState<number | null>(null);
+  const [change, setChange] = useState<number | null>(null);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const ticker = tickerMap[airlineCode];
+      const data = await getStockPrice(ticker);
+      if (data) {
+        setPrice(data.price);
+        setChange(data.change);
+      }
+    };
+
+    fetch();
+  }, [airlineCode]);
+
+  const trend = change === null ? 'neutral' : change > 0 ? 'up' : change < 0 ? 'down' : 'neutral';
+
+  const prediction = price !== null ? (price * 1.15).toFixed(2) : '—'; // mock peak
+  const confidence = '84%'; // mock confidence
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
       <Card>
         <CardContent className="pt-6">
           <div className="text-sm text-gray-500 mb-1">Current Price</div>
-          <div className="text-2xl font-bold">${metrics.currentPrice}</div>
+          <div className="text-2xl font-bold">
+            {price !== null ? `$${price.toFixed(2)}` : '—'}
+          </div>
           <div className={`flex items-center mt-1 text-sm ${
-            metrics.trend === 'up' ? 'text-green-600' : 
-            metrics.trend === 'down' ? 'text-red-600' : 'text-gray-600'
+            trend === 'up' ? 'text-green-600' :
+            trend === 'down' ? 'text-red-600' :
+            'text-gray-600'
           }`}>
-            {metrics.trend === 'up' ? (
-              <ArrowUpRight className="h-4 w-4 mr-1" />
-            ) : metrics.trend === 'down' ? (
-              <ArrowDownRight className="h-4 w-4 mr-1" />
-            ) : (
-              <Minus className="h-4 w-4 mr-1" />
-            )}
-            <span>{metrics.changePercent}%</span>
+            {trend === 'up' ? <ArrowUpRight className="h-4 w-4 mr-1" /> :
+             trend === 'down' ? <ArrowDownRight className="h-4 w-4 mr-1" /> :
+             <Minus className="h-4 w-4 mr-1" />}
+            <span>{change !== null ? `${change.toFixed(2)}%` : '—'}</span>
           </div>
         </CardContent>
       </Card>
-      
+
       <Card>
         <CardContent className="pt-6">
           <div className="text-sm text-gray-500 mb-1">Predicted Peak</div>
-          <div className="text-2xl font-bold">${metrics.prediction}</div>
+          <div className="text-2xl font-bold">${prediction}</div>
           <div className="text-sm text-gray-600 mt-1">Next 2 quarters</div>
         </CardContent>
       </Card>
-      
+
       <Card>
         <CardContent className="pt-6">
           <div className="text-sm text-gray-500 mb-1">Prediction Confidence</div>
-          <div className="text-2xl font-bold">{metrics.confidence}</div>
+          <div className="text-2xl font-bold">{confidence}</div>
           <div className="text-sm text-gray-600 mt-1">Based on historical data</div>
         </CardContent>
       </Card>
