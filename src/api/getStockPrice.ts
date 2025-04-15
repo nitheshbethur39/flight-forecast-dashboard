@@ -12,13 +12,18 @@ export const getStockPrice = async (ticker: string) => {
       },
     });
 
-    const data = response.data;
-    return {
-      price: data?.price?.regularMarketPrice,
-      change: data?.price?.regularMarketChangePercent
+    const result = response.data?.body?.[0];
+    if (!result) {
+      console.error('Invalid data returned from API:', response.data);
+      return null;
+    }
+
+    return { 
+      price: result.regularMarketPrice ?? null,
+      change: result.regularMarketChangePercent ?? null, 
     };
-  } catch (err) {
-    console.error('Error fetching stock price:', err);
+  } catch (error: any) {
+    console.error('API call failed:', error?.response || error.message);
     return null;
   }
 };
