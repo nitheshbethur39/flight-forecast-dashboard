@@ -1,13 +1,10 @@
-
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-//import Header from '@/components/Header';
 import ChartSelector from '@/components/ChartSelector';
-import StockChart from '@/components/StockChart';
+import AirlineChart from '@/components/charts/AirlineChart';
 import StockMetrics from '@/components/StockMetrics';
 import { Button } from '@/components/ui/button';
-
 
 const airlineNames: Record<string, string> = {
   'AAL': 'American Airlines',
@@ -37,7 +34,6 @@ const AirlineDetail: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-    
       <main className="container mx-auto py-8 px-4">
         <div className="mb-6">
           <Link to="/">
@@ -56,8 +52,7 @@ const AirlineDetail: React.FC = () => {
         </div>
 
         <StockMetrics airlineCode={code} />
-        
-        <StockChart airlineCode={code} period={period} />
+        <AirlineChart airlineCode={code} />
 
         <div className="mt-8 bg-white p-6 rounded-lg border shadow-sm">
           <h2 className="text-xl font-semibold mb-4">About This Forecast</h2>
