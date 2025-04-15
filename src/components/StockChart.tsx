@@ -5,6 +5,7 @@ import {
 } from 'recharts';
 import useChartData from '@/hooks/useChartData';
 
+
 interface StockChartProps {
   airlineCode: string;
   period: string;

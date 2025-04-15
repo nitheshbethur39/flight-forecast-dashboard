@@ -3,45 +3,39 @@ import {
   LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 import { Card, CardContent } from '@/components/ui/card';
-import useUALChartData from '@/hooks/useUALChartData';
+import useAirlineChartData from '@/hooks/useAirlineChartData';
 
-const UALChart = () => {
-  const data = useUALChartData();
+interface AirlineChartProps {
+  airlineCode: string;
+}
+
+const AirlineChart: React.FC<AirlineChartProps> = ({ airlineCode }) => {
+  const data = useAirlineChartData(airlineCode);
 
   return (
     <Card className="w-full mt-6 border shadow-sm">
       <CardContent className="p-6">
         <h2 className="text-lg font-semibold mb-4">Stock Price Prediction</h2>
-        <p className="text-sm text-gray-500 mb-4">Detailed forecast for UAL</p>
+        <p className="text-sm text-gray-500 mb-4">Detailed forecast for {airlineCode}</p>
         <ResponsiveContainer width="100%" height={400}>
           <LineChart
             data={data}
             margin={{ top: 10, right: 30, left: 10, bottom: 30 }}
           >
             <XAxis 
-                dataKey="Date" 
-                tick={{ fontSize: 12 }} 
-                angle={0}
-                label={{
-                    value:'Date',
-                    position: 'insideBottom',
-                    offset:-10,
-                    fontsize:14
-                }}
+              dataKey="Date" 
+              tick={{ fontSize: 12 }} 
+              angle={0}
+              label={{ value: 'Date', position: 'insideBottom', offset: -10 }}
             />
             <YAxis 
-                tick={{ fontSize: 12 }}
-                tickFormatter={(value) => `$${value.toFixed(2)}`}
-                label={{
-                    value: 'Price',
-                    angle: -90,
-                    position: 'insideLeft',
-                    fontSize: 14
-                  }}
+              tick={{ fontSize: 12 }}
+              tickFormatter={(value) => `$${value.toFixed(2)}`}
+              label={{ value: 'Price', angle: -90, position: 'insideLeft' }}
             />
             <Tooltip 
-                formatter={(value: number) => `$${value.toFixed(2)}`}
-                wrapperStyle={{ fontSize: '14px' }} 
+              formatter={(value: number) => `$${value.toFixed(2)}`}
+              wrapperStyle={{ fontSize: '14px' }} 
             />
             <Legend verticalAlign="top" height={36} />
             
@@ -51,7 +45,7 @@ const UALChart = () => {
               stroke="#1f77b4"
               strokeWidth={3}
               dot={{ r: 4, fill: '#1f77b4' }}
-              connectNulls={true}
+              connectNulls
               name="Historical"
             />
 
@@ -61,7 +55,7 @@ const UALChart = () => {
               stroke="#2ca02c"
               strokeWidth={3}
               dot={{ r: 4, fill: '#2ca02c' }}
-              connectNulls={true}
+              connectNulls
               name="Test (Actual)"
             />
 
@@ -72,7 +66,7 @@ const UALChart = () => {
               strokeWidth={3}
               strokeDasharray="4 4"
               dot={{ r: 4, fill: '#ff7f0e' }}
-              connectNulls={true}
+              connectNulls
               name="Test (Predicted)"
             />
 
@@ -83,7 +77,7 @@ const UALChart = () => {
               strokeWidth={3}
               strokeDasharray="6 3"
               dot={{ r: 4, fill: '#d62728' }}
-              connectNulls={true}
+              connectNulls
               name="Forecasted"
             />
           </LineChart>
@@ -92,6 +86,5 @@ const UALChart = () => {
     </Card>
   );
 };
-const data = useUALChartData();
-console.log(data);
-export default UALChart;
+
+export default AirlineChart;
