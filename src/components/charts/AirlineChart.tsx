@@ -26,7 +26,7 @@ const AirlineChart: React.FC<AirlineChartProps> = ({ airlineCode }) => {
               dataKey="Date" 
               tick={{ fontSize: 12 }} 
               angle={0}
-              label={{ value: 'Date', position: 'insideBottom', offset: -10 }}
+              label={{ value: 'Quarter', position: 'insideBottom', offset: -10 }}
             />
             <YAxis 
               tick={{ fontSize: 12 }}
