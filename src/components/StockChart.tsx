@@ -30,7 +30,6 @@ const StockChart: React.FC<StockChartProps> = ({ airlineCode }) => {
               <Tooltip />
               <Legend />
               <Line dataKey="Historical" stroke="#1f77b4" name="Historical" />
-              <Line dataKey="Test_Actual" stroke="#2ca02c" name="Test (Actual)" />
               <Line dataKey="Test_Predicted" stroke="#ff7f0e" strokeDasharray="5 5" name="Test (Predicted)" />
               <Line dataKey="Forecasted" stroke="#d62728" strokeDasharray="2 2" name="Forecasted" />
             </LineChart>

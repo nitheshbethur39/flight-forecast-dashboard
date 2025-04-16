@@ -51,16 +51,6 @@ const AirlineChart: React.FC<AirlineChartProps> = ({ airlineCode }) => {
 
             <Line
               type="monotone"
-              dataKey="Test_Actual"
-              stroke="#2ca02c"
-              strokeWidth={3}
-              dot={{ r: 4, fill: '#2ca02c' }}
-              connectNulls
-              name="Test (Actual)"
-            />
-
-            <Line
-              type="monotone"
               dataKey="Test_Predicted"
               stroke="#ff7f0e"
               strokeWidth={3}
