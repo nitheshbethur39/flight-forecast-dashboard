@@ -7,7 +7,8 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer
+  ResponsiveContainer,
+  Brush
 } from 'recharts';
 import useDayTradingData from '@/hooks/useDayTradingData';
 
@@ -52,10 +53,20 @@ const DayTradingChart: React.FC<DayTradingChartProps> = ({ airlineCode }) => {
                   />
                   <Tooltip />
                   <Legend verticalAlign="top" height={36} />
+                  <Brush
+                      dataKey="Date"
+                      height={30}
+                      stroke="#36454F"
+                      travellerWidth={10}
+                  />
+                  
                   <Line type="monotone" dataKey="Actual" stroke="#1f77b4" name="Actual Close" dot />
                   <Line type="monotone" dataKey="MedianForecast" stroke="#d62728" name="Median Forecast" dot />
                 </LineChart>
               </ResponsiveContainer>
+
+
+              
             </div>
           </div>
         ))
