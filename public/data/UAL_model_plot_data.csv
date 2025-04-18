@@ -68,6 +68,6 @@ Date,Historical,Test_Actual,Test_Predicted,Forecasted
 2024-Q2,50.33,50.33,50.00,
 2024-Q3,46.29,46.29,46.45,
 2024-Q4,null,null,null,65.73
-2025-Q1,null,null,null,65.78
-2025-Q2,null,null,null,65.63
-2025-Q3,null,null,null,65.73
+2025-Q1,null,null,null,69.78
+2025-Q2,null,null,null,72.63
+2025-Q3,null,null,null,75.73
