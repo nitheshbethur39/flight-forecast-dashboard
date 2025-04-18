@@ -23,9 +23,9 @@ const Index: React.FC = () => {
       <section className="relative h-[500px] overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/flight.jpg"
+            src="/images/flight_new.jpg"
             alt="Airplane in flight"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-[50%_75%]"
           />
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
@@ -53,12 +53,12 @@ const Index: React.FC = () => {
         </div>
 
         <div className="absolute bottom-2 left-4 text-white/70 text-xs">
-          Photo by Artturi Jalli on Unsplash
+          Photo by Mark Olsen on Unsplash
         </div>
       </section>
 
       {/* Airline Selection Section */}
-      <section id="airline-section" className="container mx-auto py-6 px-4">
+      <section id="airline-section" className="container mx-auto py-6 px-4 bg-zinc-50">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-2">Explore by Airline</h2>
           <p className="text-gray-600">Click a logo to view prediction insights.</p>

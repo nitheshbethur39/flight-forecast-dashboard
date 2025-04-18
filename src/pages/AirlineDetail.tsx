@@ -34,7 +34,7 @@ const AirlineDetail: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#F3FDFE]">
       <main className="container mx-auto py-8 px-4">
         {/* Back and Header */}
         <div className="mb-6">
