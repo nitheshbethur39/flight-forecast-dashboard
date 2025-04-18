@@ -1,4 +1,3 @@
-// ✅ Correct ESM import (no need for extension)
 import axios from 'axios';
 
 export const getStockPrice = async (symbol: string) => {
@@ -16,15 +15,13 @@ export const getStockPrice = async (symbol: string) => {
     );
 
     const result = response.data?.body?.[0];
+    
     if (!result) {
       console.error('Invalid data returned from API:', response.data);
       return null;
     }
 
-    return {
-      price: result.regularMarketPrice ?? null,
-      change: result.regularMarketChangePercent ?? null,
-    };
+    return result; // Return the full result so StockMetrics can access all fields
   } catch (error: any) {
     console.error('API call failed:', error?.response || error.message);
     return null;

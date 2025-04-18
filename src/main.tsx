@@ -1,8 +1,11 @@
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-import '@fontsource/inter'; // OR
-// import '@fontsource/inter/index.css'; if you don’t want variable fonts
+import '@fontsource/ibm-plex-sans';
+import { BrowserRouter } from 'react-router-dom';
 
-
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);

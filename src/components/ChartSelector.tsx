@@ -2,15 +2,15 @@ import React from 'react';
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface ChartSelectorProps {
-  onPeriodChange: (period: string) => void;
+  onPeriodChange: (period: 'ltf' | 'day') => void;
 }
 
 const ChartSelector: React.FC<ChartSelectorProps> = ({ onPeriodChange }) => {
   return (
-    <Tabs defaultValue="2q" className="w-full" onValueChange={onPeriodChange}>
+    <Tabs defaultValue="ltf" className="w-full" onValueChange={(val) => onPeriodChange(val as 'ltf' | 'day')}>
       <TabsList className="mb-4">
-        <TabsTrigger value="3q">3 Quarters</TabsTrigger>
-        <TabsTrigger value="day">Day Trading</TabsTrigger>
+        <TabsTrigger value="ltf">Long Term Forecast</TabsTrigger>
+        <TabsTrigger value="day">Day Trading Forecast</TabsTrigger>
       </TabsList>
     </Tabs>
   );

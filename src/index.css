@@ -81,3 +81,15 @@
   opacity: 0;
   animation: fadeIn 0.5s ease-out forwards;
 }
+
+
+/* Optional: prevent content shift on zoom */
+body {
+  transform-origin: top center;
+}
+.zoom-in-detail {
+  zoom: 1; /* adjust this for how much you want to zoom in */
+}
+.zoom-out-home {
+  zoom: 0.7; /* or scale with transform if preferred */
+}

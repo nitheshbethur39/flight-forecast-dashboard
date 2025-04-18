@@ -108,9 +108,13 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'float': 'float 3s ease-in-out infinite'
 			},
+			
+			
 			fontFamily: {
-				sans: ['Inter', 'sans-serif'], // 👈 This sets Inter as your default sans
+				sans: ['"IBM Plex Sans"', 'sans-serif'],
 			  },
+			  
+			  
 		}
 	},
 	plugins: [require("tailwindcss-animate")],

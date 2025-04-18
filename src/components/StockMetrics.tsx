@@ -19,11 +19,10 @@ const tickerMap: Record<string, string> = {
   LUV: 'LUV',
 };
 
-const cache: Record<string, { data: { price: number; change: number }; timestamp: number }> = {};
+const cache: Record<string, { data: any; timestamp: number }> = {};
 
 const StockMetrics: React.FC<StockMetricsProps> = ({ airlineCode }) => {
-  const [price, setPrice] = useState<number | null>(null);
-  const [change, setChange] = useState<number | null>(null);
+  const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
@@ -33,11 +32,8 @@ const StockMetrics: React.FC<StockMetricsProps> = ({ airlineCode }) => {
       const ticker = tickerMap[airlineCode];
       const now = Date.now();
 
-      // Use cached data if available and fresh (5 min)
       if (cache[ticker] && now - cache[ticker].timestamp < 5 * 60 * 1000) {
-        const { data } = cache[ticker];
-        setPrice(data.price);
-        setChange(data.change);
+        setResult(cache[ticker].data);
         setLastUpdated(new Date(cache[ticker].timestamp).toLocaleTimeString());
         setLoading(false);
         return;
@@ -45,13 +41,10 @@ const StockMetrics: React.FC<StockMetricsProps> = ({ airlineCode }) => {
 
       try {
         const data = await getStockPrice(ticker);
-        if (data && typeof data.price === 'number' && typeof data.change === 'number') {
-          setPrice(data.price);
-          setChange(data.change);
+        if (data) {
+          setResult(data);
           cache[ticker] = { data, timestamp: now };
           setLastUpdated(new Date(now).toLocaleTimeString());
-        } else {
-          console.warn("Invalid stock data:", data);
         }
       } catch (err) {
         console.error("Error fetching stock data", err);
@@ -63,21 +56,27 @@ const StockMetrics: React.FC<StockMetricsProps> = ({ airlineCode }) => {
     fetchData();
   }, [airlineCode]);
 
+  const price = result?.regularMarketPrice ?? null;
+  const change = result?.regularMarketChangePercent ?? null;
+  const open = result?.regularMarketOpen ?? null;
+  const high52 = result?.fiftyTwoWeekHigh ?? null;
+  const low52 = result?.fiftyTwoWeekLow ?? null;
+  const hourlyChange = price && open ? (((price - open) / open) * 100).toFixed(2) : null;
+
   const trend = change === null ? 'neutral' : change > 0 ? 'up' : change < 0 ? 'down' : 'neutral';
   const prediction = price !== null ? (price * 1.15).toFixed(2) : '—';
   const confidence = '84%';
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
       <Card>
         <CardContent className="pt-6">
           <div className="text-sm text-gray-500 mb-1">Current Price</div>
           {loading ? (
             <Loader2 className="animate-spin h-6 w-6 text-gray-400" />
           ) : (
-            <div className="text-2xl font-bold">
-              {price !== null ? `$${price.toFixed(2)}` : '—'}
-            </div>
+            <div className="text-2xl font-bold">{price ? `$${price.toFixed(2)}` : '—'}</div>
           )}
           <div className={`flex items-center mt-1 text-sm ${
             trend === 'up' ? 'text-green-600' :
@@ -102,11 +101,19 @@ const StockMetrics: React.FC<StockMetricsProps> = ({ airlineCode }) => {
         </CardContent>
       </Card>
 
+
       <Card>
         <CardContent className="pt-6">
-          <div className="text-sm text-gray-500 mb-1">Prediction Confidence</div>
-          <div className="text-2xl font-bold">{confidence}</div>
-          <div className="text-sm text-gray-600 mt-1">Based on historical data</div>
+          <div className="text-sm text-gray-500 mb-1">Day Trading Signals</div>
+          <div className="text-sm mb-1">
+            52W High: <span className="font-medium">{high52 ? `$${high52.toFixed(2)}` : '—'}</span>
+          </div>
+          <div className="text-sm mb-1">
+            52W Low: <span className="font-medium">{low52 ? `$${low52.toFixed(2)}` : '—'}</span>
+          </div>
+          <div className="text-sm">
+            Hourly Change: <span className="font-medium">{hourlyChange !== null ? `${hourlyChange}%` : '—'}</span>
+          </div>
         </CardContent>
       </Card>
     </div>
