@@ -4,7 +4,7 @@ import Papa from 'papaparse';
 export interface AirlineDataPoint {
   Date: string;
   Historical: number | null;
-  Test_Predicted: number | null;
+  //Test_Predicted: number | null;
   Forecasted: number | null;
 }
 
@@ -25,7 +25,7 @@ const useAirlineChartData = (airlineCode: string): AirlineDataPoint[] => {
             const parsed = results.data.map((row: any) => ({
               Date: row.Date,
               Historical: parseValue(row.Historical),
-              Test_Predicted: parseValue(row.Test_Predicted),
+              //Test_Predicted: parseValue(row.Test_Predicted),
               Forecasted: parseValue(row.Forecasted),
             }));
 

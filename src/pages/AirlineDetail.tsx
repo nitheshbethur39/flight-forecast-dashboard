@@ -4,8 +4,10 @@ import { ArrowLeft } from 'lucide-react';
 import ChartSelector from '@/components/ChartSelector';
 import AirlineChart from '@/components/charts/AirlineChart';
 import DayTradingChart from '@/components/charts/DayTradingChart';
+import YearlyTradingChart from '@/components/charts/YearlyTradingChart';
 import StockMetrics from '@/components/StockMetrics';
 import { Button } from '@/components/ui/button';
+import airlineFeatures from '@/data/airlineFeatures';
 
 const airlineNames: Record<string, string> = {
   AAL: 'American Airlines',
@@ -14,7 +16,6 @@ const airlineNames: Record<string, string> = {
   DAL: 'Delta Air Lines',
   ULCC: 'Frontier Airlines',
   ALGT: 'Allegiant Air',
-  SAVEQ: 'Spirit Airlines',
   UAL: 'United Airlines',
   LUV: 'Southwest Airlines',
 };
@@ -28,10 +29,6 @@ const AirlineDetail: React.FC = () => {
   }
 
   const airlineName = airlineNames[code];
-
-  const handlePeriodChange = (newPeriod: 'ltf' | 'day') => {
-    setPeriod(newPeriod);
-  };
 
   return (
     <div className="min-h-screen bg-[#F3FDFE]">
@@ -48,18 +45,69 @@ const AirlineDetail: React.FC = () => {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <h1 className="text-3xl font-bold">{airlineName} ({code})</h1>
-            
             </div>
-            <ChartSelector onPeriodChange={handlePeriodChange} />
+            <ChartSelector onPeriodChange={(val) => setPeriod(val)} />
           </div>
         </div>
 
         {/* Metrics */}
+        
         <StockMetrics airlineCode={code} />
 
         {/* Chart Switcher */}
         {period === 'ltf' ? (
-          <AirlineChart airlineCode={code} />
+          <>
+            <AirlineChart airlineCode={code} />
+
+            {/* Features Section */}
+            <div className="mt-10 bg-white p-6 rounded-lg shadow-lg border">
+              <h2 className="text-xl font-semibold mb-4">Features Driving Our Forecasts</h2>
+              <p className="text-gray-600 mb-6">
+                These are some of the key metrics we use to forecast {airlineName}'s stock performance.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-sm text-gray-700">
+                {(airlineFeatures[code] || []).map((feature, i) => (
+                  <div key={i} className="bg-gray-50 p-4 rounded-md shadow-sm">
+                    <strong>{feature.title}</strong>
+                    <p className="mt-1 text-gray-600">{feature.desc}</p>
+                  </div>
+                ))}
+                {(airlineFeatures[code]?.length ?? 0) === 0 && (
+                  <p className="text-gray-500 col-span-full italic">Feature data not available for this airline.</p>
+                )}
+              </div>
+            </div>
+
+            {/* Historical Returns Overview */}
+            {/*}
+            <div className="mt-8">
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold text-gray-800">
+                   Historical Stock Returns Overview
+                </h2>
+                <p className="text-gray-600 mt-1">
+                  Explore 1Y, 3Y, and 5Y return trends using historical closing prices for {airlineName}.
+                </p>
+              </div>
+              <YearlyTradingChart airlineCode={code} />
+            </div>
+            */}
+            {/* Historical Returns Overview */}
+            <div className="mt-8 bg-white p-6 rounded-lg border shadow-lg">
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold text-gray-800">
+                  Historical Stock Returns Overview
+                </h2>
+                <p className="text-gray-600 mt-1">
+                  Explore 1Y, 3Y, and 5Y return trends using historical closing prices for {airlineName}.
+                </p>
+              </div>
+
+  <YearlyTradingChart airlineCode={code} />
+</div>
+
+
+          </>
         ) : (
           <DayTradingChart airlineCode={code} />
         )}

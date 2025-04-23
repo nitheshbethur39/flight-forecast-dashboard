@@ -14,7 +14,6 @@ const tickerMap: Record<string, string> = {
   DAL: 'DAL',
   ULCC: 'ULCC',
   ALGT: 'ALGT',
-  SAVEQ: 'SAVE',
   UAL: 'UAL',
   LUV: 'LUV',
 };
@@ -68,9 +67,8 @@ const StockMetrics: React.FC<StockMetricsProps> = ({ airlineCode }) => {
   const confidence = '84%';
 
   return (
-    
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-      <Card>
+      <Card className="shadow-md border">
         <CardContent className="pt-6">
           <div className="text-sm text-gray-500 mb-1">Current Price</div>
           {loading ? (
@@ -93,7 +91,7 @@ const StockMetrics: React.FC<StockMetricsProps> = ({ airlineCode }) => {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="shadow-md border">
         <CardContent className="pt-6">
           <div className="text-sm text-gray-500 mb-1">Predicted Peak</div>
           <div className="text-2xl font-bold">{price ? `$${prediction}` : '—'}</div>
@@ -101,8 +99,7 @@ const StockMetrics: React.FC<StockMetricsProps> = ({ airlineCode }) => {
         </CardContent>
       </Card>
 
-
-      <Card>
+      <Card className="shadow-md border">
         <CardContent className="pt-6">
           <div className="text-sm text-gray-500 mb-1">Day Trading Signals</div>
           <div className="text-sm mb-1">

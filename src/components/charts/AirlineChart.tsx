@@ -21,7 +21,7 @@ const AirlineChart: React.FC<AirlineChartProps> = ({ airlineCode }) => {
   const data = useAirlineChartData(airlineCode);
 
   return (
-    <Card className="w-full mt-6 border shadow-sm">
+    <Card className="w-full mt-6 border shadow-lg">
       <CardContent className="p-6">
         <h2 className="text-lg font-semibold mb-4">Stock Price Prediction</h2>
         <p className="text-sm text-gray-500 mb-4">Detailed forecast for {airlineCode}</p>
@@ -66,16 +66,7 @@ const AirlineChart: React.FC<AirlineChartProps> = ({ airlineCode }) => {
               connectNulls
               name="Historical"
             />
-            <Line
-              type="monotone"
-              dataKey="Test_Predicted"
-              stroke="#ff7f0e"
-              strokeWidth={3}
-              strokeDasharray="4 4"
-              dot={{ r: 4, fill: '#ff7f0e' }}
-              connectNulls
-              name="Test (Predicted)"
-            />
+    
             <Line
               type="monotone"
               dataKey="Forecasted"
