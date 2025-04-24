@@ -4,7 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route } from "react-router-dom";
-import Index from "./pages/Home";
+import Home from "./pages/Home";
 import AirlineDetail from "./pages/AirlineDetail";
 import NotFound from "./pages/NotFound";
 import InvestmentPage from "./pages/investment"; // Include this if you have it
@@ -22,7 +22,7 @@ const App = () => {
         <Sonner />
         <div className={`min-h-screen font-sans ${isDetailPage ? "zoom-in-detail" : ""}`}>
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route path="/" element={<Home />} />
             <Route path="/investment" element={<InvestmentPage />} />
             <Route path="/airline/:code" element={<AirlineDetail />} />
             <Route path="*" element={<NotFound />} />

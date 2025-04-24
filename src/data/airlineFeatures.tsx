@@ -1,9 +1,9 @@
 const airlineFeatures: Record<string, { title: string; desc: string }[]> = {
     ALK: [
-      { title: 'Revenue per Seat', desc: 'Tracks how much income is generated per available seat.' },
-      { title: 'Fuel Costs', desc: 'A major factor affecting airline expenses and margins.' },
-      { title: 'Load Factor', desc: 'Percentage of seats filled on average across flights.' },
-      { title: 'Debt Ratio', desc: 'Shows how leveraged the airline is with external financing.' },
+      { title: 'Transport-Related Expenses', desc: 'This captures all costs directly associated with moving passengers and cargo.' },
+      { title: 'Passenger Services', desc: 'These are costs incurred for in-flight and ground services provided directly to passengers.' },
+      { title: 'Income Before Taxes', desc: 'This is the airline’s profit or loss from all operations and non-operating items, before deducting income tax expense.' },
+      { title: 'Property and Baggage', desc: 'This captures the airline’s income from checked- and carry-on baggage charges.' }
     ],
     AAL: [
       { title: 'Operating Margin', desc: 'Measures profitability relative to total revenue.' },
