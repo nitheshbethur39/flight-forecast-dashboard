@@ -66,7 +66,7 @@ const Index: React.FC = () => {
       <section className="relative h-[500px] overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/flight_new.jpg"
+            src="/images/Landing.jpg"
             alt="Airplane in flight"
             className="w-full h-full object-cover object-[50%_75%]"
           />
@@ -101,7 +101,7 @@ const Index: React.FC = () => {
         </div>
 
         <div className="absolute bottom-2 left-4 text-white/70 text-xs">
-          Photo by Mark Olsen on Unsplash
+          Photo by David Syphers on Unsplash
         </div>
       </section>
 
