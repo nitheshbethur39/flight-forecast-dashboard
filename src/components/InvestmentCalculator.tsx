@@ -143,32 +143,32 @@ export default function InvestmentCalculator() {
         <>
           <div className="mt-6 bg-gray-100 p-4 rounded-lg">
             <p className="text-lg font-semibold">
-              💵 Final Value: ${result.final.toFixed(2)}
+               Final Value: ${result.final.toFixed(2)}
             </p>
             {result.profit >= 0 ? (
               <p className="text-green-600 font-semibold">
-                📈 Profit: ${result.profit.toFixed(2)}
+                 Profit: ${result.profit.toFixed(2)}
               </p>
             ) : (
               <p className="text-red-600 font-semibold">
-                📉 Loss: ${Math.abs(result.profit).toFixed(2)}
+                 Loss: ${Math.abs(result.profit).toFixed(2)}
               </p>
             )}
             <p className="text-gray-800">
-              📊 Multiplier: {result.multiplier.toFixed(2)}x
+               Multiplier: {result.multiplier.toFixed(2)}x
             </p>
             <p className="text-gray-600">
-              ⏳ Based on {result.periodCount} quarter(s) of forecast data
+               Based on {result.periodCount} quarter(s) of forecast data
             </p>
             <p className="text-gray-500">
-              📅 From <strong>{result.startDate}</strong> to{" "}
+               From <strong>{result.startDate}</strong> to{" "}
               <strong>{result.endDate}</strong>
             </p>
           </div>
 
           {/* Forecast Line Chart */}
           <div className="mt-8 bg-white p-4 shadow rounded-lg">
-            <h4 className="text-lg font-semibold mb-2">📉 Forecasted Trend</h4>
+            <h4 className="text-lg font-semibold mb-2"> Forecasted Trend</h4>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={forecastChartData}>
                 <XAxis dataKey="Date" />

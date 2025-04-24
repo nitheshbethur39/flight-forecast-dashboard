@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, TrendingUp, Users, DollarSign, Briefcase, PlaneTakeoff, Shield, BarChart2, Clock } from 'lucide-react';
 import ChartSelector from '@/components/ChartSelector';
 import AirlineChart from '@/components/charts/AirlineChart';
 import DayTradingChart from '@/components/charts/DayTradingChart';
@@ -20,9 +20,46 @@ const airlineNames: Record<string, string> = {
   LUV: 'Southwest Airlines',
 };
 
+// Function to get appropriate icon for each feature
+const getFeatureIcon = (title: string) => {
+  const iconMap: Record<string, React.ReactNode> = {
+    'Transport-Related Expenses': <PlaneTakeoff className="h-6 w-6 text-blue-500" />,
+    'Passenger Services': <Users className="h-6 w-6 text-indigo-500" />,
+    'Income Before Taxes': <DollarSign className="h-6 w-6 text-green-500" />,
+    'Property and Baggage': <Briefcase className="h-6 w-6 text-amber-500" />,
+    'Operating Margin': <BarChart2 className="h-6 w-6 text-purple-500" />,
+    'Passenger Revenue': <Users className="h-6 w-6 text-indigo-500" />,
+    'CASM': <Clock className="h-6 w-6 text-red-500" />,
+    'Fuel Hedging Strategy': <Shield className="h-6 w-6 text-teal-500" />,
+    'Operating Revenue': <DollarSign className="h-6 w-6 text-green-500" />,
+    'Non-ticket Revenue': <DollarSign className="h-6 w-6 text-emerald-500" />,
+    'Debt-to-Equity Ratio': <BarChart2 className="h-6 w-6 text-blue-500" />,
+    'Route Efficiency': <TrendingUp className="h-6 w-6 text-orange-500" />,
+  };
+
+  return iconMap[title] || <BarChart2 className="h-6 w-6 text-gray-500" />;
+};
+
+// Get gradient class for each feature card
+const getGradientClass = (index: number) => {
+  const gradients = [
+    'bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200',
+    'bg-gradient-to-br from-green-50 to-emerald-50 border-green-200',
+    'bg-gradient-to-br from-amber-50 to-yellow-50 border-amber-200',
+    'bg-gradient-to-br from-purple-50 to-indigo-50 border-purple-200'
+  ];
+  
+  return gradients[index % gradients.length];
+};
+
 const AirlineDetail: React.FC = () => {
   const { code } = useParams<{ code: string }>();
   const [period, setPeriod] = useState<'ltf' | 'day'>('ltf');
+  
+  // Add this useEffect to scroll to top when component mounts or code changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [code]);
 
   if (!code || !airlineNames[code]) {
     return <div>Airline not found</div>;
@@ -51,7 +88,6 @@ const AirlineDetail: React.FC = () => {
         </div>
 
         {/* Metrics */}
-        
         <StockMetrics airlineCode={code} />
 
         {/* Chart Switcher */}
@@ -59,39 +95,43 @@ const AirlineDetail: React.FC = () => {
           <>
             <AirlineChart airlineCode={code} />
 
-            {/* Features Section */}
-            <div className="mt-10 bg-white p-6 rounded-lg shadow-lg border">
-              <h2 className="text-xl font-semibold mb-4">Features Driving Our Forecasts</h2>
-              <p className="text-gray-600 mb-6">
-                These are some of the key metrics we use to forecast {airlineName}'s stock performance.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-sm text-gray-700">
-                {(airlineFeatures[code] || []).map((feature, i) => (
-                  <div key={i} className="bg-gray-50 p-4 rounded-md shadow-sm">
-                    <strong>{feature.title}</strong>
-                    <p className="mt-1 text-gray-600">{feature.desc}</p>
-                  </div>
-                ))}
-                {(airlineFeatures[code]?.length ?? 0) === 0 && (
-                  <p className="text-gray-500 col-span-full italic">Feature data not available for this airline.</p>
-                )}
-              </div>
-            </div>
-
-            {/* Historical Returns Overview */}
-            {/*}
-            <div className="mt-8">
+            {/* Enhanced Features Section */}
+            <div className="mt-10 bg-white p-6 sm:p-8 rounded-lg shadow-lg border">
               <div className="mb-6">
-                <h2 className="text-xl font-semibold text-gray-800">
-                   Historical Stock Returns Overview
+                <h2 className="text-2xl font-bold text-gray-800 flex items-center">
+                  <TrendingUp className="h-6 w-6 mr-2 text-blue-600" />
+                  Features Driving Our Forecasts
                 </h2>
-                <p className="text-gray-600 mt-1">
-                  Explore 1Y, 3Y, and 5Y return trends using historical closing prices for {airlineName}.
+                <p className="text-gray-600 mt-2">
+                  These are some of the key metrics we use to forecast {airlineName}'s stock performance.
                 </p>
               </div>
-              <YearlyTradingChart airlineCode={code} />
+              
+              {(airlineFeatures[code]?.length ?? 0) > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                  {(airlineFeatures[code] || []).map((feature, i) => (
+                    <div 
+                      key={i} 
+                      className={`rounded-xl shadow-md border p-5 transition-all duration-300 hover:shadow-lg ${getGradientClass(i)}`}
+                    >
+                      <div className="flex items-start mb-3">
+                        <div className="p-2 rounded-lg bg-white shadow-sm mr-3">
+                          {getFeatureIcon(feature.title)}
+                        </div>
+                        <h3 className="font-semibold text-gray-800 text-base leading-tight">{feature.title}</h3>
+                      </div>
+                      <p className="text-gray-600 text-sm">{feature.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12 bg-gray-50 rounded-lg">
+                  <BarChart2 className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+                  <p className="text-gray-500 italic">Feature data not available for this airline.</p>
+                </div>
+              )}
             </div>
-            */}
+
             {/* Historical Returns Overview */}
             <div className="mt-8 bg-white p-6 rounded-lg border shadow-lg">
               <div className="mb-6">
@@ -103,10 +143,8 @@ const AirlineDetail: React.FC = () => {
                 </p>
               </div>
 
-  <YearlyTradingChart airlineCode={code} />
-</div>
-
-
+              <YearlyTradingChart airlineCode={code} />
+            </div>
           </>
         ) : (
           <DayTradingChart airlineCode={code} />
