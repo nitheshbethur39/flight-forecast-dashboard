@@ -1,8 +1,0 @@
-// This file is used to configure Vercel deployment settings
-  {
-    "rewrites": [
-      { "source": "/(.*)", "destination": "/" }
-    ],
-    "outputDirectory": "dist"
-  }
-  
