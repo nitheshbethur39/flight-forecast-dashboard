@@ -5,7 +5,6 @@ import {
 } from 'recharts';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowUpRight, ArrowDownRight, RefreshCw } from 'lucide-react';
-import { getHistoricalReturns } from '../../api/getHistoricalReturns';
 
 interface Props {
   airlineCode: string;
@@ -59,16 +58,8 @@ const YearlyTradingChart: React.FC<Props> = ({ airlineCode }) => {
       } catch (err) {
         console.error('Chart data fetch failed:', err);
         setError('Failed to load chart data');
-
-        const dummyData = Array.from({ length: 30 }, (_, i) => {
-          const date = new Date();
-          date.setDate(date.getDate() - (30 - i));
-          return {
-            Date: date.toISOString().split('T')[0],
-            CLOSE: 30 + Math.random() * 15,
-          };
-        });
-        setData(dummyData);
+        // Remove dummy data, just show empty chart
+        setData([]);
       } finally {
         setIsLoadingChart(false);
       }
@@ -78,32 +69,63 @@ const YearlyTradingChart: React.FC<Props> = ({ airlineCode }) => {
   }, [airlineCode, timeframe]);
 
   useEffect(() => {
-    const fetchReturnData = async () => {
+    const calculateReturns = async () => {
       setIsLoadingReturns(true);
+      setError(null);
+      
+      const returnValues: Record<string, number | null> = {
+        '1Y': null,
+        '3Y': null,
+        '5Y': null
+      };
 
       try {
-        const result = await getHistoricalReturns(airlineCode);
-        const validated: Record<string, number> = {};
+        // Calculate returns for each timeframe from the CSV data
         for (const tf of ['1Y', '3Y', '5Y']) {
-          const val = result?.[tf];
-          validated[tf] = val !== undefined && val !== null && !isNaN(Number(val))
-            ? Number(val)
-            : tf === '1Y' ? 12.45 : tf === '3Y' ? -8.32 : 22.75;
+          const fileName = `${airlineCode}_${tf}_Close.csv`;
+          const filePath = `/data/yearly_charts_data/${fileName}`;
+          
+          try {
+            const res = await fetch(filePath);
+            
+            if (!res.ok) {
+              console.error(`Failed to fetch return data for ${tf}: ${res.status}`);
+              continue;
+            }
+            
+            const text = await res.text();
+            const lines = text.split('\n').slice(1).filter(Boolean);
+            
+            if (lines.length < 2) {
+              console.warn(`Not enough data points for ${tf} return calculation`);
+              continue;
+            }
+            
+            const firstClose = parseFloat(lines[0].split(',')[1]);
+            const lastClose = parseFloat(lines[lines.length - 1].split(',')[1]);
+            
+            if (isNaN(firstClose) || isNaN(lastClose) || firstClose === 0) {
+              console.warn(`Invalid data for ${tf} return calculation`);
+              continue;
+            }
+            
+            const returnPercentage = ((lastClose - firstClose) / firstClose) * 100;
+            returnValues[tf] = returnPercentage;
+          } catch (err) {
+            console.error(`Error calculating ${tf} return:`, err);
+          }
         }
-        setReturns(validated);
+        
+        setReturns(returnValues);
       } catch (err) {
-        console.error('Return API failed:', err);
-        setReturns({
-          '1Y': 12.45,
-          '3Y': -8.32,
-          '5Y': 22.75
-        });
+        console.error('Returns calculation failed:', err);
+        setError('Failed to calculate returns');
       } finally {
         setIsLoadingReturns(false);
       }
     };
 
-    fetchReturnData();
+    calculateReturns();
   }, [airlineCode, retryCount]);
 
   const retryFetchReturns = () => setRetryCount(prev => prev + 1);
@@ -167,7 +189,7 @@ const YearlyTradingChart: React.FC<Props> = ({ airlineCode }) => {
           <div className="flex items-center justify-center h-[300px] bg-gray-50 rounded">
             <RefreshCw className="h-8 w-8 animate-spin text-blue-500" />
           </div>
-        ) : (
+        ) : data.length > 0 ? (
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={data}>
               <defs>
@@ -188,6 +210,10 @@ const YearlyTradingChart: React.FC<Props> = ({ airlineCode }) => {
               />
             </AreaChart>
           </ResponsiveContainer>
+        ) : (
+          <div className="flex items-center justify-center h-[300px] bg-gray-50 rounded text-gray-500">
+            No data available
+          </div>
         )}
       </CardContent>
     </Card>
