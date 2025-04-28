@@ -1,4 +1,3 @@
-// YearlyTradingChart.tsx
 import React, { useEffect, useState } from 'react';
 import {
   AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer,
@@ -39,18 +38,19 @@ const YearlyTradingChart: React.FC<Props> = ({ airlineCode }) => {
       const filePath = `/data/yearly_charts_data/${fileName}`;
 
       try {
-        console.log(`Fetching chart data from: ${filePath}`);
         const res = await fetch(filePath);
-
         if (!res.ok) throw new Error(`Failed to fetch chart data: ${res.status}`);
-        
-        const text = await res.text();
-        const lines = text.split('\n').slice(1);
 
-        const parsed = lines.filter(Boolean).map((line) => {
-          const [Date, CLOSE] = line.split(',');
-          return { Date, CLOSE: parseFloat(CLOSE) || 0 };
-        });
+        const text = await res.text();
+        const lines = text.split('\n').slice(1).filter(Boolean);
+
+        const parsed = lines
+          .map(line => line.trim())
+          .filter(Boolean)
+          .map((line) => {
+            const [Date, CLOSE] = line.split(',').map(val => val.trim());
+            return { Date, CLOSE: parseFloat(CLOSE) || 0 };
+          });
 
         if (!parsed.length) throw new Error('No valid rows parsed');
 
@@ -58,7 +58,6 @@ const YearlyTradingChart: React.FC<Props> = ({ airlineCode }) => {
       } catch (err) {
         console.error('Chart data fetch failed:', err);
         setError('Failed to load chart data');
-        // Remove dummy data, just show empty chart
         setData([]);
       } finally {
         setIsLoadingChart(false);
@@ -72,7 +71,7 @@ const YearlyTradingChart: React.FC<Props> = ({ airlineCode }) => {
     const calculateReturns = async () => {
       setIsLoadingReturns(true);
       setError(null);
-      
+
       const returnValues: Record<string, number | null> = {
         '1Y': null,
         '3Y': null,
@@ -80,42 +79,42 @@ const YearlyTradingChart: React.FC<Props> = ({ airlineCode }) => {
       };
 
       try {
-        // Calculate returns for each timeframe from the CSV data
         for (const tf of ['1Y', '3Y', '5Y']) {
           const fileName = `${airlineCode}_${tf}_Close.csv`;
           const filePath = `/data/yearly_charts_data/${fileName}`;
-          
+
           try {
             const res = await fetch(filePath);
-            
             if (!res.ok) {
               console.error(`Failed to fetch return data for ${tf}: ${res.status}`);
               continue;
             }
-            
+
             const text = await res.text();
             const lines = text.split('\n').slice(1).filter(Boolean);
-            
-            if (lines.length < 2) {
+
+            const cleanedLines = lines.map(line => line.trim()).filter(Boolean);
+
+            if (cleanedLines.length < 2) {
               console.warn(`Not enough data points for ${tf} return calculation`);
               continue;
             }
-            
-            const firstClose = parseFloat(lines[0].split(',')[1]);
-            const lastClose = parseFloat(lines[lines.length - 1].split(',')[1]);
-            
+
+            const firstClose = parseFloat(cleanedLines[0].split(',')[1].trim());
+            const lastClose = parseFloat(cleanedLines[cleanedLines.length - 1].split(',')[1].trim());
+
             if (isNaN(firstClose) || isNaN(lastClose) || firstClose === 0) {
               console.warn(`Invalid data for ${tf} return calculation`);
               continue;
             }
-            
+
             const returnPercentage = ((lastClose - firstClose) / firstClose) * 100;
             returnValues[tf] = returnPercentage;
           } catch (err) {
             console.error(`Error calculating ${tf} return:`, err);
           }
         }
-        
+
         setReturns(returnValues);
       } catch (err) {
         console.error('Returns calculation failed:', err);
@@ -147,9 +146,7 @@ const YearlyTradingChart: React.FC<Props> = ({ airlineCode }) => {
             {Math.abs(returnValue).toFixed(2)}%
           </p>
         ) : (
-          <button onClick={retryFetchReturns} className="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1">
-            <RefreshCw className="h-3 w-3" /> Retry
-          </button>
+          <p className="text-sm text-gray-500">No data</p>
         )}
       </div>
     );

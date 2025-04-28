@@ -28,7 +28,7 @@ const InvestmentPage = () => {
                 Investment Return Simulator
               </h1>
               <p className="text-lg mb-6 text-gray-200">
-                Project your returns from any quarter between <strong>2024 Q1</strong> to <strong>2025 Q4</strong> using our predictive models.
+                Project your returns from any quarter between <strong>2024 Q4</strong> to <strong>2025 Q4</strong> using our predictive models.
               </p>
               <Separator className="bg-white/20 mt-6 mb-6" />
             </div>
