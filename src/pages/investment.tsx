@@ -36,6 +36,7 @@ const InvestmentPage = () => {
             {/* Right Column - Calculator Card */}
             <div className="w-full lg:w-7/12">
               <div className="bg-white rounded-xl shadow-xl p-8 border border-gray-100">
+                
                 <h2 className="text-2xl font-bold text-gray-800 mb-6">
                   Investment Return Calculator
                 </h2>
@@ -51,12 +52,10 @@ const InvestmentPage = () => {
       <footer className="bg-gray-100 border-t py-8">
         <div className="container mx-auto px-4 text-center text-gray-500 text-sm">
           <p>
-            © {new Date().getFullYear()} Airline Insight Hub - Airline stock
+            © {new Date().getFullYear()} Airline stock
             forecast dashboard
           </p>
-          <p className="mt-2">
-            Results are estimates only and not guaranteed. Not investment advice.
-          </p>
+          
         </div>
       </footer>
     </div>

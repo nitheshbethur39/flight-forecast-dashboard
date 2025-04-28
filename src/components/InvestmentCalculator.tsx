@@ -80,7 +80,7 @@ export default function InvestmentCalculator() {
 
   return (
     <div style={{ padding: "1rem" }}>
-      <h3 className="text-xl font-bold mb-4">Investment Return Calculator</h3>
+     
 
       <div className="mb-4">
         <label className="block mb-1 font-medium">Select Airline:</label>
@@ -103,9 +103,11 @@ export default function InvestmentCalculator() {
 
       <div className="mb-4">
         <label className="block mb-1 font-medium">Investment Amount ($):</label>
+        
         <input
           type="number"
-          value={amount}
+          value={amount === 0 ? '' : amount}
+          placeholder="Enter any amount"
           min={100}
           step={100}
           onChange={(e) => setAmount(Number(e.target.value))}
@@ -167,30 +169,37 @@ export default function InvestmentCalculator() {
           </div>
 
           {/* Forecast Line Chart */}
-          <div className="mt-8 bg-white p-4 shadow rounded-lg">
+          <div style={{ width: '600px' }}>
+          <div className="mt-8 bg-white p-6 shadow rounded-lg">
             <h4 className="text-lg font-semibold mb-2"> Forecasted Trend</h4>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={forecastChartData}>
-                <XAxis dataKey="Date" />
-                <YAxis domain={["auto", "auto"]} />
+                <XAxis dataKey="Date" 
+                label={{ value: 'Quarter', position: 'insideBottom', offset: 0 }} />
+                <YAxis domain={["auto", "auto"]}
+                label={{ value: 'Price $', angle: -90, position: 'insideLeft' }} />
+              
                 <Tooltip />
                 <Line type="monotone" dataKey="Close" stroke="#1e40af" strokeWidth={2} />
               </LineChart>
             </ResponsiveContainer>
           </div>
+          </div>
+
+          {/* Historical Data Table */}
 
           {/* Buy/Sell Signal and Conditional Best Timing */}
           <div className="flex flex-col lg:flex-row gap-6 mt-8">
             {/* Investment Signal Bar Chart */}
             <div className="flex-1 bg-white p-4 shadow rounded-lg">
-              <h4 className="text-lg font-semibold mb-2">📍 Investment Signal</h4>
+              <h4 className="text-lg font-semibold mb-2"> Investment Signal</h4>
               <ResponsiveContainer width="100%" height={200}>
                 <BarChart data={[{
                   label: result.profit >= 0 ? "Buy" : "Sell",
                   value: Math.abs(result.profit)
                 }]}>
                   <XAxis dataKey="label" />
-                  <YAxis />
+                  <YAxis label={{ value: 'Price $', angle: -90, position: 'insideLeft' }}/>
                   <Tooltip />
                   <Bar
                     dataKey="value"
@@ -204,7 +213,7 @@ export default function InvestmentCalculator() {
             {/* Best Timing only if Profit */}
             {result.profit > 0 && (
               <div className="flex-1 bg-yellow-50 p-4 border border-yellow-200 rounded">
-                <h4 className="text-md font-semibold mb-2">📅 Suggested Buy/Sell Timing</h4>
+                <h4 className="text-md font-semibold mb-2"> Suggested Buy/Sell Timing</h4>
                 {(() => {
                   const buyPoint = forecastChartData.reduce((min, d) => d.Close < min.Close ? d : min, forecastChartData[0]);
                   const afterBuy = forecastChartData.filter(d => d.Date > buyPoint.Date);
@@ -216,9 +225,9 @@ export default function InvestmentCalculator() {
 
                   return (
                     <ul className="text-sm text-gray-700 space-y-1">
-                      <li>💰 <strong>Best Time to Buy:</strong> {buyPoint.Date} @ ${buyPoint.Close.toFixed(2)}</li>
-                      <li>💵 <strong>Best Time to Sell:</strong> {sellPoint.Date} @ ${sellPoint.Close.toFixed(2)}</li>
-                      <li>🔁 <strong>Potential Return:</strong> {returnPct.toFixed(2)}%</li>
+                      <li><strong>Best Time to Buy:</strong> {buyPoint.Date} @ ${buyPoint.Close.toFixed(2)}</li>
+                      <li><strong>Best Time to Sell:</strong> {sellPoint.Date} @ ${sellPoint.Close.toFixed(2)}</li>
+                      <li><strong>Potential Return:</strong> {returnPct.toFixed(2)}%</li>
                     </ul>
                   );
                 })()}

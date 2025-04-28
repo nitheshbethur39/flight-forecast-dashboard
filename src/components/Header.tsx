@@ -3,10 +3,8 @@ import { Menu } from 'lucide-react';
 
 const navItems = [
   { label: 'Overview', href: '#overview' },
-  { label: 'Predictions', href: '#predictions' },
-  { label: 'Resources', href: '#resources' },
-  { label: 'About', href: '/about' },
   { label: 'Investment Calculator', href: '/investment' },
+  { label: 'About', href: '/about' }
 ];
 
 const Header: React.FC = () => {
