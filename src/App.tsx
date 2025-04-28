@@ -8,6 +8,7 @@ import Index from "./pages/Home";
 import AirlineDetail from "./pages/AirlineDetail";
 import NotFound from "./pages/NotFound";
 import InvestmentPage from "./pages/investment"; // Include this if you have it
+import About from "./pages/About";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => {
         <div className={`min-h-screen font-sans ${isDetailPage ? "zoom-in-detail" : ""}`}>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/About" element={<About />} />
             <Route path="/investment" element={<InvestmentPage />} />
             <Route path="/airline/:code" element={<AirlineDetail />} />
             <Route path="*" element={<NotFound />} />

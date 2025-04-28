@@ -5,7 +5,7 @@ const navItems = [
   { label: 'Overview', href: '#overview' },
   { label: 'Predictions', href: '#predictions' },
   { label: 'Resources', href: '#resources' },
-  { label: 'About', href: '#about' },
+  { label: 'About', href: '/about' },
   { label: 'Investment Calculator', href: '/investment' },
 ];
 
