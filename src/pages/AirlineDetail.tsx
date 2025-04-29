@@ -157,22 +157,11 @@ const AirlineDetail: React.FC = () => {
             These predictions are generated using machine learning algorithms trained on historical stock data,
             market trends, airline industry metrics, and economic indicators.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-            <div>
-              <h3 className="text-lg font-medium mb-2">Prediction Methodology</h3>
-              <p className="text-gray-600">
-                Our model accounts for seasonal travel patterns, fuel price fluctuations, and overall market sentiment
-                to generate the most accurate stock price predictions for {airlineName}.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-lg font-medium mb-2">Disclaimer</h3>
-              <p className="text-gray-600">
-                These predictions are for informational purposes only and should not be considered financial advice.
-                Past performance is not indicative of future results.
-              </p>
-            </div>
-          </div>
+          <h2 className="text-lg font-semibold mb-2">Forecast Methodology</h2>
+          <p className="text-gray-700">
+            The model considers various factors, including airline performance, market conditions, and economic
+            indicators, to provide a comprehensive forecast.
+          </p>
         </div>
       </main>
 
