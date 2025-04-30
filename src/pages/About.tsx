@@ -44,6 +44,15 @@ const About: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#F3FDFE] py-16 px-6">
       <section className="container mx-auto max-w-5xl">
+        {/* Back to Home */}
+        <div className="mb-8">
+          <a
+            href="/"
+            className="inline-flex items-center bg-white text-black-600 font-medium px-4 py-2 rounded-xl shadow-sm hover:bg-blue-50 transition"
+          >
+            ← Back to Home
+          </a>
+        </div>
         <h1 className="text-4xl font-bold text-center mb-12">About This Project</h1>
 
         {/* About Dashboard */}
@@ -115,8 +124,11 @@ const About: React.FC = () => {
             </a>
           </Button>
         </div>
+
+
       </section>
     </div>
+    
   );
 };
 
