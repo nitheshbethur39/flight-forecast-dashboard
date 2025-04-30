@@ -175,12 +175,9 @@ const Index: React.FC = () => {
       <footer className="bg-white border-t py-8 mt-12">
         <div className="container mx-auto px-4 text-center text-gray-500 text-sm">
           <p>
-            © {new Date().getFullYear()} Airline Insight Hub - Airline stock
-            forecast dashboard
+            © {new Date().getFullYear()} Airline Stock Forecast Dashboard
           </p>
-          <p className="mt-2">
-            Data is for informational purposes only. Not investment advice.
-          </p>
+
         </div>
       </footer>
     </div>
