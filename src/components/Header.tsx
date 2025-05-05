@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Menu } from 'lucide-react';
 
 const navItems = [
-  { label: 'Overview', href: '#overview' },
+  
   { label: 'Investment Calculator', href: '/investment' },
   { label: 'About', href: '/about' }
 ];
