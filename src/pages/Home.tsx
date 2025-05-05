@@ -163,8 +163,8 @@ const Index: React.FC = () => {
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
               <h3 className="text-xl font-bold mb-2">Major Airlines</h3>
               <p className="text-gray-600">
-                Coverage of the ten largest U.S. carriers, representing over 90%
-                of domestic air travel.
+                Coverage of the eight largest U.S. carriers, representing 
+                 domestic air travel.
               </p>
             </div>
           </div>
